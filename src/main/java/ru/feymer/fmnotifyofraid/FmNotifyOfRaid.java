@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
+import ru.feymer.fmnotifyofraid.commands.FmNotifyOfRaidCommand;
 import ru.feymer.fmnotifyofraid.listeners.Listeners;
 import ru.feymer.fmnotifyofraid.telegram.TelegramBot;
 import ru.feymer.fmnotifyofraid.utils.Config;
@@ -27,6 +28,7 @@ public final class FmNotifyOfRaid extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new Listeners(), this);
         Config.loadYamlFile(this);
         DataConfig.loadYamlFile(this);
+        this.getCommand("fmnotifyofraid").setExecutor(new FmNotifyOfRaidCommand());
         Updater updater = new Updater(this);
         updater.start();
 
