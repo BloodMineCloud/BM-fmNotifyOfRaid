@@ -47,13 +47,13 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
 
                     if (ownerName != null) {
                         if (Utils.getBoolean("settings.message-in-game-of-raid")) {
-                            Utils.sendMessage(ownerName, Utils.getString("messages.notify-of-raid-in-game").replace("%region%", rg.getId()));
+                            Utils.sendMessage(ownerName, Utils.getString("messages.notify-of-raid-in-game").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                         }
                         if (Utils.getBoolean("settings.message-in-telegram-of-raid")) {
                             TelegramUtils telegramUtils = new TelegramUtils();
                             long chatId = telegramUtils.getChatId(ownerName);
                             if (chatId != 0) {
-                                this.sendMessage(chatId, Utils.getString("messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()));
+                                this.sendMessage(chatId, Utils.getString("telegram.messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                             }
                         }
                     } else if (Utils.getBoolean("settings.message-in-telegram-of-raid")) {
@@ -61,7 +61,7 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                         TelegramUtils telegramUtils = new TelegramUtils();
                         long chatId = telegramUtils.getChatId(ownerNameOffline);
                         if (chatId != 0) {
-                            this.sendMessage(chatId, Utils.getString("messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()));
+                            this.sendMessage(chatId, Utils.getString("telegram.messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                         }
                     }
                 }
@@ -81,13 +81,13 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
 
                     if (ownerName != null) {
                         if (Utils.getBoolean("settings.message-in-game-of-raid")) {
-                            Utils.sendMessage(ownerName, Utils.getString("messages.notify-of-raid-in-game").replace("%region%", rg.getId()));
+                            Utils.sendMessage(ownerName, Utils.getString("messages.notify-of-raid-in-game").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                         }
                         if (Utils.getBoolean("settings.message-in-telegram-of-raid")) {
                             TelegramUtils telegramUtils = new TelegramUtils();
                             long chatId = telegramUtils.getChatId(ownerName);
                             if (chatId != 0) {
-                                this.sendMessage(chatId, Utils.getString("messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()));
+                                this.sendMessage(chatId, Utils.getString("telegram.messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                             }
                         }
                     } else if (Utils.getBoolean("settings.message-in-telegram-of-raid")) {
@@ -95,7 +95,7 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                         TelegramUtils telegramUtils = new TelegramUtils();
                         long chatId = telegramUtils.getChatId(ownerNameOffline);
                         if (chatId != 0) {
-                            this.sendMessage(chatId, Utils.getString("messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()));
+                            this.sendMessage(chatId, Utils.getString("telegram.messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                         }
                     }
                 }
@@ -115,13 +115,13 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
 
                     if (ownerName != null) {
                         if (Utils.getBoolean("settings.message-in-game-of-raid")) {
-                            Utils.sendMessage(ownerName, Utils.getString("messages.notify-of-raid-in-game").replace("%region%", rg.getId()));
+                            Utils.sendMessage(ownerName, Utils.getString("messages.notify-of-raid-in-game").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                         }
                         if (Utils.getBoolean("settings.message-in-telegram-of-raid")) {
                             TelegramUtils telegramUtils = new TelegramUtils();
                             long chatId = telegramUtils.getChatId(ownerName);
                             if (chatId != 0) {
-                                this.sendMessage(chatId, Utils.getString("messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()));
+                                this.sendMessage(chatId, Utils.getString("telegram.messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                             }
                         }
                     } else if (Utils.getBoolean("settings.message-in-telegram-of-raid")) {
@@ -129,7 +129,7 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                         TelegramUtils telegramUtils = new TelegramUtils();
                         long chatId = telegramUtils.getChatId(ownerNameOffline);
                         if (chatId != 0) {
-                            this.sendMessage(chatId, Utils.getString("messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()));
+                            this.sendMessage(chatId, Utils.getString("telegram.messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                         }
                     }
                 }
