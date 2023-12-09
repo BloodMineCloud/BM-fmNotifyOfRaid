@@ -3,3 +3,7 @@ version: '${version}'
 main: ru.feymer.fmnotifyofraid.FmNotifyOfRaid
 api-version: '1.16'
 depend: [ WorldGuard ]
+commands:
+  fmnotifyofraid:
+    aliases:
+      - fmnor
