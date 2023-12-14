@@ -7,15 +7,17 @@ import com.sk89q.worldguard.domains.DefaultDomain;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.apache.commons.lang.RandomStringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.TNTPrimed;
-import org.bukkit.entity.WitherSkull;
+import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.PistonMoveReaction;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.type.Piston;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -53,7 +55,12 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                             TelegramUtils telegramUtils = new TelegramUtils();
                             long chatId = telegramUtils.getChatId(ownerName);
                             if (chatId != 0) {
-                                this.sendMessage(chatId, Utils.getString("telegram.messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                                StringBuilder stringBuilder = new StringBuilder();
+                                for (String stringList : Utils.getStringList("telegram.messages.notify-of-raid-in-telegram")) {
+                                    stringBuilder.append(stringList).append("\n");
+                                }
+                                String message = stringBuilder.toString();
+                                this.sendMessage(chatId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                             }
                         }
                     } else if (Utils.getBoolean("settings.message-in-telegram-of-raid")) {
@@ -61,7 +68,12 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                         TelegramUtils telegramUtils = new TelegramUtils();
                         long chatId = telegramUtils.getChatId(ownerNameOffline);
                         if (chatId != 0) {
-                            this.sendMessage(chatId, Utils.getString("telegram.messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (String stringList : Utils.getStringList("telegram.messages.notify-of-raid-in-telegram")) {
+                                stringBuilder.append(stringList).append("\n");
+                            }
+                            String message = stringBuilder.toString();
+                            this.sendMessage(chatId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                         }
                     }
                 }
@@ -87,7 +99,12 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                             TelegramUtils telegramUtils = new TelegramUtils();
                             long chatId = telegramUtils.getChatId(ownerName);
                             if (chatId != 0) {
-                                this.sendMessage(chatId, Utils.getString("telegram.messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                                StringBuilder stringBuilder = new StringBuilder();
+                                for (String stringList : Utils.getStringList("telegram.messages.notify-of-raid-in-telegram")) {
+                                    stringBuilder.append(stringList).append("\n");
+                                }
+                                String message = stringBuilder.toString();
+                                this.sendMessage(chatId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                             }
                         }
                     } else if (Utils.getBoolean("settings.message-in-telegram-of-raid")) {
@@ -95,7 +112,12 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                         TelegramUtils telegramUtils = new TelegramUtils();
                         long chatId = telegramUtils.getChatId(ownerNameOffline);
                         if (chatId != 0) {
-                            this.sendMessage(chatId, Utils.getString("telegram.messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (String stringList : Utils.getStringList("telegram.messages.notify-of-raid-in-telegram")) {
+                                stringBuilder.append(stringList).append("\n");
+                            }
+                            String message = stringBuilder.toString();
+                            this.sendMessage(chatId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                         }
                     }
                 }
@@ -121,7 +143,12 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                             TelegramUtils telegramUtils = new TelegramUtils();
                             long chatId = telegramUtils.getChatId(ownerName);
                             if (chatId != 0) {
-                                this.sendMessage(chatId, Utils.getString("telegram.messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                                StringBuilder stringBuilder = new StringBuilder();
+                                for (String stringList : Utils.getStringList("telegram.messages.notify-of-raid-in-telegram")) {
+                                    stringBuilder.append(stringList).append("\n");
+                                }
+                                String message = stringBuilder.toString();
+                                this.sendMessage(chatId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                             }
                         }
                     } else if (Utils.getBoolean("settings.message-in-telegram-of-raid")) {
@@ -129,7 +156,75 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                         TelegramUtils telegramUtils = new TelegramUtils();
                         long chatId = telegramUtils.getChatId(ownerNameOffline);
                         if (chatId != 0) {
-                            this.sendMessage(chatId, Utils.getString("telegram.messages.notify-of-raid-in-telegram").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (String stringList : Utils.getStringList("telegram.messages.notify-of-raid-in-telegram")) {
+                                stringBuilder.append(stringList).append("\n");
+                            }
+                            String message = stringBuilder.toString();
+                            this.sendMessage(chatId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPistonRetract(BlockPistonExtendEvent event) {
+        for (Block b : event.getBlocks()) {
+            Location loc = b.getLocation();
+            BlockFace face = event.getDirection();
+
+            switch (face) {
+                case NORTH:
+                    loc.add(0, 0, -1);
+                    break;
+                case SOUTH:
+                    loc.add(0, 0, 1);
+                    break;
+                case EAST:
+                    loc.add(1, 0, 0);
+                    break;
+                case WEST:
+                    loc.add(-1, 0, 0);
+                    break;
+            }
+            World world = b.getWorld();
+            int x = loc.getBlockX();
+            int y = loc.getBlockY();
+            int z = loc.getBlockZ();
+            ApplicableRegionSet region = worldGuard.getPlatform().getRegionContainer().get(BukkitAdapter.adapt(world)).getApplicableRegions(BlockVector3.at(x, y, z));
+            for (ProtectedRegion rg : region.getRegions()) {
+                DefaultDomain owners = rg.getOwners();
+                for (UUID uuid : owners.getUniqueIds()) {
+                    Player ownerName = Bukkit.getPlayer(uuid);
+                    if (ownerName != null) {
+                        if (Utils.getBoolean("settings.message-in-game-of-raid")) {
+                            Utils.sendMessage(ownerName, Utils.getString("messages.notify-of-raid-in-game").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                        }
+                        if (Utils.getBoolean("settings.message-in-telegram-of-raid")) {
+                            TelegramUtils telegramUtils = new TelegramUtils();
+                            long chatId = telegramUtils.getChatId(ownerName);
+                            if (chatId != 0) {
+                                StringBuilder stringBuilder = new StringBuilder();
+                                for (String stringList : Utils.getStringList("telegram.messages.notify-of-raid-in-telegram")) {
+                                    stringBuilder.append(stringList).append("\n");
+                                }
+                                String message = stringBuilder.toString();
+                                this.sendMessage(chatId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                            }
+                        }
+                    } else if (Utils.getBoolean("settings.message-in-telegram-of-raid")) {
+                        OfflinePlayer ownerNameOffline = (OfflinePlayer) Bukkit.getOfflinePlayer(uuid);
+                        TelegramUtils telegramUtils = new TelegramUtils();
+                        long chatId = telegramUtils.getChatId(ownerNameOffline);
+                        if (chatId != 0) {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (String stringList : Utils.getStringList("telegram.messages.notify-of-raid-in-telegram")) {
+                                stringBuilder.append(stringList).append("\n");
+                            }
+                            String message = stringBuilder.toString();
+                            this.sendMessage(chatId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                         }
                     }
                 }

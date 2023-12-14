@@ -71,7 +71,12 @@ public class TelegramBot extends TelegramLongPollingBot {
                     this.sendMessage(chatId, Utils.getString("telegram.messages.command-not-found"));
                 }
             } else {
-                this.sendMessage(chatId, Utils.getString("telegram.messages.help"));
+                StringBuilder stringBuilder = new StringBuilder();
+                for (String stringList : Utils.getStringList("telegram.messages.help")) {
+                    stringBuilder.append(stringList).append("\n");
+                }
+                String messageHelp = stringBuilder.toString();
+                this.sendMessage(chatId, messageHelp);
             }
         }
     }
