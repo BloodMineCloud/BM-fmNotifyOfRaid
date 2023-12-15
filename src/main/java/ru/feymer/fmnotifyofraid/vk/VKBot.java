@@ -36,9 +36,12 @@ public class VKBot {
                 messages.forEach(message -> {
                     try {
                         String msg = message.getText();
-                        int chatId = message.getFromId();
+                        int userId = message.getFromId();
                         String[] args = msg.split(" ");
                         if (msg.startsWith("/start")) {
+                            return;
+                        }
+                        if (userId <= 0) {
                             return;
                         }
                         if (args.length == 3) {
@@ -48,40 +51,40 @@ public class VKBot {
                                     DataConfig dataConfig = new DataConfig("");
 
                                     if (player != null) {
-                                        if (dataConfig.contains(player.getName())) {
-                                            VKUtils.sendMessage(chatId, Utils.getString("vk.messages.already-tied-up"));
+                                        if (dataConfig.contains(player.getName() + ".vk")) {
+                                            VKUtils.sendMessage(userId, Utils.getString("vk.messages.already-tied-up"));
                                         } else {
                                             String randomNumber = RandomStringUtils.randomNumeric(5);
-                                            VKUtils.sendMessage(chatId, Utils.getString("vk.messages.telegram-tied-up"));
+                                            VKUtils.sendMessage(userId, Utils.getString("vk.messages.vk-tied-up"));
                                             Utils.sendMessage(player, Utils.getString("messages.game-tied-up").replace("%code%", randomNumber));
-                                            codes.put(chatId, randomNumber);
-                                            playerNames.put(chatId, player.getName());
+                                            codes.put(userId, randomNumber);
+                                            playerNames.put(userId, player.getName());
                                         }
                                     } else {
-                                        VKUtils.sendMessage(chatId, Utils.getString("vk.messages.player-null"));
+                                        VKUtils.sendMessage(userId, Utils.getString("vk.messages.player-null"));
                                     }
                                 } else if (args[1].equalsIgnoreCase("код")) {
                                     String code = args[2];
 
-                                    if (codes.containsKey(chatId)) {
-                                        if (code.equals(codes.get(chatId))) {
-                                            VKUtils.sendMessage(chatId, Utils.getString("vk.messages.success-tied-up"));
+                                    if (codes.containsKey(userId)) {
+                                        if (code.equals(codes.get(userId))) {
+                                            VKUtils.sendMessage(userId, Utils.getString("vk.messages.success-tied-up"));
                                             DataConfig dataConfig = new DataConfig("");
-                                            dataConfig.set(playerNames.get(chatId), chatId);
+                                            dataConfig.set(playerNames.get(userId) + ".vk", userId);
                                             DataConfig.saveData();
-                                            playerNames.remove(chatId);
-                                            codes.remove(chatId);
+                                            playerNames.remove(userId);
+                                            codes.remove(userId);
                                         } else {
-                                            VKUtils.sendMessage(chatId, Utils.getString("vk.messages.wrong-code"));
+                                            VKUtils.sendMessage(userId, Utils.getString("vk.messages.wrong-code"));
                                         }
                                     } else {
-                                        VKUtils.sendMessage(chatId, Utils.getString("vk.messages.request-not-found"));
+                                        VKUtils.sendMessage(userId, Utils.getString("vk.messages.request-not-found"));
                                     }
                                 } else {
-                                    VKUtils.sendMessage(chatId, Utils.getString("vk.messages.command-not-found"));
+                                    VKUtils.sendMessage(userId, Utils.getString("vk.messages.command-not-found"));
                                 }
                             } else {
-                                VKUtils.sendMessage(chatId, Utils.getString("vk.messages.command-not-found"));
+                                VKUtils.sendMessage(userId, Utils.getString("vk.messages.command-not-found"));
                             }
                         } else {
                             StringBuilder stringBuilder = new StringBuilder();
@@ -89,7 +92,7 @@ public class VKBot {
                                 stringBuilder.append(stringList).append("\n");
                             }
                             String messageHelp = stringBuilder.toString();
-                            VKUtils.sendMessage(chatId, messageHelp);
+                            VKUtils.sendMessage(userId, messageHelp);
                         }
                     }
                     catch (ApiException | ClientException e) {

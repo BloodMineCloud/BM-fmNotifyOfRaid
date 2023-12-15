@@ -6,6 +6,8 @@ import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.domains.DefaultDomain;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import com.vk.api.sdk.exceptions.ApiException;
+import com.vk.api.sdk.exceptions.ClientException;
 import org.apache.commons.lang.RandomStringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -25,6 +27,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.feymer.fmnotifyofraid.telegram.TelegramUtils;
 import ru.feymer.fmnotifyofraid.utils.Utils;
+import ru.feymer.fmnotifyofraid.vk.VKUtils;
 
 import java.util.UUID;
 
@@ -33,7 +36,7 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
     WorldGuard worldGuard = WorldGuard.getInstance();
 
     @EventHandler
-    public void onBreakBlock(EntityExplodeEvent event) {
+    public void onBreakBlock(EntityExplodeEvent event) throws ClientException, ApiException {
         if (event.getEntity() instanceof TNTPrimed) {
             TNTPrimed tnt = (TNTPrimed) event.getEntity();
             World world = tnt.getWorld();
@@ -74,6 +77,28 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                             }
                             String message = stringBuilder.toString();
                             this.sendMessage(chatId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                        }
+                    }
+                    if (Utils.getBoolean("settings.message-in-vk-of-raid")) {
+                        int userId = VKUtils.getUserId(ownerName);
+                        if (userId != 0) {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (String stringList : Utils.getStringList("vk.messages.notify-of-raid-in-vk")) {
+                                stringBuilder.append(stringList).append("\n");
+                            }
+                            String message = stringBuilder.toString();
+                            VKUtils.sendMessage(userId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                        }
+                    } else if (Utils.getBoolean("settings.message-in-vk-of-raid")) {
+                        OfflinePlayer ownerNameOffline = (OfflinePlayer) Bukkit.getOfflinePlayer(uuid);
+                        int userId = VKUtils.getUserId(ownerNameOffline);
+                        if (userId != 0) {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (String stringList : Utils.getStringList("vk.messages.notify-of-raid-in-vk")) {
+                                stringBuilder.append(stringList).append("\n");
+                            }
+                            String message = stringBuilder.toString();
+                            VKUtils.sendMessage(userId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                         }
                     }
                 }
@@ -120,6 +145,28 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                             this.sendMessage(chatId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                         }
                     }
+                    if (Utils.getBoolean("settings.message-in-vk-of-raid")) {
+                        int userId = VKUtils.getUserId(ownerName);
+                        if (userId != 0) {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (String stringList : Utils.getStringList("vk.messages.notify-of-raid-in-vk")) {
+                                stringBuilder.append(stringList).append("\n");
+                            }
+                            String message = stringBuilder.toString();
+                            VKUtils.sendMessage(userId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                        }
+                    } else if (Utils.getBoolean("settings.message-in-vk-of-raid")) {
+                        OfflinePlayer ownerNameOffline = (OfflinePlayer) Bukkit.getOfflinePlayer(uuid);
+                        int chatId = VKUtils.getUserId(ownerNameOffline);
+                        if (chatId != 0) {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (String stringList : Utils.getStringList("vk.messages.notify-of-raid-in-vk")) {
+                                stringBuilder.append(stringList).append("\n");
+                            }
+                            String message = stringBuilder.toString();
+                            VKUtils.sendMessage(chatId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                        }
+                    }
                 }
             }
         } else if (event.getEntity() instanceof Creeper) {
@@ -164,13 +211,35 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                             this.sendMessage(chatId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                         }
                     }
+                    if (Utils.getBoolean("settings.message-in-vk-of-raid")) {
+                        int userId = VKUtils.getUserId(ownerName);
+                        if (userId != 0) {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (String stringList : Utils.getStringList("vk.messages.notify-of-raid-in-vk")) {
+                                stringBuilder.append(stringList).append("\n");
+                            }
+                            String message = stringBuilder.toString();
+                            VKUtils.sendMessage(userId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                        }
+                    } else if (Utils.getBoolean("settings.message-in-vk-of-raid")) {
+                        OfflinePlayer ownerNameOffline = (OfflinePlayer) Bukkit.getOfflinePlayer(uuid);
+                        int chatId = VKUtils.getUserId(ownerNameOffline);
+                        if (chatId != 0) {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (String stringList : Utils.getStringList("vk.messages.notify-of-raid-in-vk")) {
+                                stringBuilder.append(stringList).append("\n");
+                            }
+                            String message = stringBuilder.toString();
+                            VKUtils.sendMessage(chatId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                        }
+                    }
                 }
             }
         }
     }
 
     @EventHandler
-    public void onPistonRetract(BlockPistonExtendEvent event) {
+    public void onPistonRetract(BlockPistonExtendEvent event) throws ClientException, ApiException {
         for (Block b : event.getBlocks()) {
             Location loc = b.getLocation();
             BlockFace face = event.getDirection();
@@ -225,6 +294,28 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                             }
                             String message = stringBuilder.toString();
                             this.sendMessage(chatId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                        }
+                    }
+                    if (Utils.getBoolean("settings.message-in-vk-of-raid")) {
+                        int userId = VKUtils.getUserId(ownerName);
+                        if (userId != 0) {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (String stringList : Utils.getStringList("vk.messages.notify-of-raid-in-vk")) {
+                                stringBuilder.append(stringList).append("\n");
+                            }
+                            String message = stringBuilder.toString();
+                            VKUtils.sendMessage(userId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                        }
+                    } else if (Utils.getBoolean("settings.message-in-vk-of-raid")) {
+                        OfflinePlayer ownerNameOffline = (OfflinePlayer) Bukkit.getOfflinePlayer(uuid);
+                        int userId = VKUtils.getUserId(ownerNameOffline);
+                        if (userId != 0) {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (String stringList : Utils.getStringList("vk.messages.notify-of-raid-in-vk")) {
+                                stringBuilder.append(stringList).append("\n");
+                            }
+                            String message = stringBuilder.toString();
+                            VKUtils.sendMessage(userId, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
                         }
                     }
                 }

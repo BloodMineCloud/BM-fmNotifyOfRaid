@@ -20,65 +20,65 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        if (Utils.getBoolean("telegram.settings.enable")) {
-            Message message = update.getMessage();
-            if (message != null) {
-                long chatId = message.getChatId();
-                String msg = message.getText();
-                String[] args = msg.split(" ");
-                if (msg.startsWith("/start")) {
-                    return;
-                }
-                if (args.length == 3) {
-                    if (msg.startsWith("!анти-рейд")) {
-                        if (args[1].equalsIgnoreCase("привязать")) {
-                            Player player = Bukkit.getPlayer(args[2]);
-                            DataConfig dataConfig = new DataConfig("");
+        Bukkit.getConsoleSender().sendMessage("0");
+        Message message = update.getMessage();
+        if (message != null) {
+            long chatId = message.getChatId();
+            String msg = message.getText();
+            String[] args = msg.split(" ");
+            if (msg.startsWith("/start")) {
+                return;
+            }
+            if (args.length == 3) {
+                if (msg.startsWith("!анти-рейд")) {
+                    if (args[1].equalsIgnoreCase("привязать")) {
+                        Bukkit.getConsoleSender().sendMessage("1");
+                        Player player = Bukkit.getPlayer(args[2]);
+                        DataConfig dataConfig = new DataConfig("");
 
-                            if (player != null) {
-                                if (dataConfig.contains(player.getName())) {
-                                    this.sendMessage(chatId, Utils.getString("telegram.messages.already-tied-up"));
-                                } else {
-                                    String randomNumber = RandomStringUtils.randomNumeric(5);
-                                    this.sendMessage(chatId, Utils.getString("telegram.messages.telegram-tied-up"));
-                                    Utils.sendMessage(player, Utils.getString("messages.game-tied-up").replace("%code%", randomNumber));
-                                    codes.put(chatId, randomNumber);
-                                    playerNames.put(chatId, player.getName());
-                                }
+                        if (player != null) {
+                            if (dataConfig.contains(player.getName() + ".telegram")) {
+                                this.sendMessage(chatId, Utils.getString("telegram.messages.already-tied-up"));
                             } else {
-                                this.sendMessage(chatId, Utils.getString("telegram.messages.player-null"));
-                            }
-                        } else if (args[1].equalsIgnoreCase("код")) {
-                            String code = args[2];
-
-                            if (codes.containsKey(chatId)) {
-                                if (code.equals(codes.get(chatId))) {
-                                    this.sendMessage(chatId, Utils.getString("telegram.messages.success-tied-up"));
-                                    DataConfig dataConfig = new DataConfig("");
-                                    dataConfig.set(playerNames.get(chatId), chatId);
-                                    DataConfig.saveData();
-                                    playerNames.remove(chatId);
-                                    codes.remove(chatId);
-                                } else {
-                                    this.sendMessage(chatId, Utils.getString("telegram.messages.wrong-code"));
-                                }
-                            } else {
-                                this.sendMessage(chatId, Utils.getString("telegram.messages.request-not-found"));
+                                String randomNumber = RandomStringUtils.randomNumeric(5);
+                                this.sendMessage(chatId, Utils.getString("telegram.messages.telegram-tied-up"));
+                                Utils.sendMessage(player, Utils.getString("messages.game-tied-up").replace("%code%", randomNumber));
+                                codes.put(chatId, randomNumber);
+                                playerNames.put(chatId, player.getName());
                             }
                         } else {
-                            this.sendMessage(chatId, Utils.getString("telegram.messages.command-not-found"));
+                            this.sendMessage(chatId, Utils.getString("telegram.messages.player-null"));
+                        }
+                    } else if (args[1].equalsIgnoreCase("код")) {
+                        String code = args[2];
+
+                        if (codes.containsKey(chatId)) {
+                            if (code.equals(codes.get(chatId))) {
+                                this.sendMessage(chatId, Utils.getString("telegram.messages.success-tied-up"));
+                                DataConfig dataConfig = new DataConfig("");
+                                dataConfig.set(playerNames.get(chatId) + ".telegram", chatId);
+                                DataConfig.saveData();
+                                playerNames.remove(chatId);
+                                codes.remove(chatId);
+                            } else {
+                                this.sendMessage(chatId, Utils.getString("telegram.messages.wrong-code"));
+                            }
+                        } else {
+                            this.sendMessage(chatId, Utils.getString("telegram.messages.request-not-found"));
                         }
                     } else {
                         this.sendMessage(chatId, Utils.getString("telegram.messages.command-not-found"));
                     }
                 } else {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    for (String stringList : Utils.getStringList("telegram.messages.help")) {
-                        stringBuilder.append(stringList).append("\n");
-                    }
-                    String messageHelp = stringBuilder.toString();
-                    this.sendMessage(chatId, messageHelp);
+                    this.sendMessage(chatId, Utils.getString("telegram.messages.command-not-found"));
                 }
+            } else {
+                StringBuilder stringBuilder = new StringBuilder();
+                for (String stringList : Utils.getStringList("telegram.messages.help")) {
+                    stringBuilder.append(stringList).append("\n");
+                }
+                String messageHelp = stringBuilder.toString();
+                this.sendMessage(chatId, messageHelp);
             }
         }
     }

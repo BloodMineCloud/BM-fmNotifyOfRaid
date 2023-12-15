@@ -9,17 +9,17 @@ import ru.feymer.fmnotifyofraid.utils.DataConfig;
 public class TelegramUtils extends TelegramLongPollingBot {
 
     public long getChatId(Player player) {
-        DataConfig dataConfig = new DataConfig("");
-        if (dataConfig.contains(player.getName())) {
-            return dataConfig.getLong(player.getName());
+        DataConfig dataConfig = new DataConfig(player.getName());
+        if (dataConfig.contains("telegram")) {
+            return dataConfig.getLong("telegram");
         }
         return 0;
     }
 
     public long getChatId(OfflinePlayer player) {
-        DataConfig dataConfig = new DataConfig("");
-        if (dataConfig.contains(player.getName())) {
-            return dataConfig.getLong(player.getName());
+        DataConfig dataConfig = new DataConfig(player.getName());
+        if (dataConfig.contains("telegram")) {
+            return dataConfig.getLong("telegram");
         }
         return 0;
     }
