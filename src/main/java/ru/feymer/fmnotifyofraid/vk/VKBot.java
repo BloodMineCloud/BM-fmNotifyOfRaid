@@ -72,8 +72,7 @@ public class VKBot {
                                                 } else {
                                                     VKUtils.sendMessage(userId, Utils.getString("vk.messages.not-playerpoints"));
                                                 }
-                                            }
-                                            else if (Utils.getString("currency.type").equalsIgnoreCase("VAULT")) {
+                                            } else if (Utils.getString("currency.type").equalsIgnoreCase("VAULT")) {
                                                 setupEconomy();
                                                 if (econ.has(player.getName(), Utils.getInt("currency.count"))) {
                                                     DataConfig dataConfig = new DataConfig("");
@@ -89,17 +88,17 @@ public class VKBot {
                                                 } else {
                                                     VKUtils.sendMessage(userId, Utils.getString("vk.messages.not-vault"));
                                                 }
-                                            }
-                                        } else {
-                                            DataConfig dataConfig = new DataConfig("");
-                                            if (dataConfig.contains(player.getName() + ".telegram")) {
-                                                VKUtils.sendMessage(userId, Utils.getString("telegram.messages.already-tied-up"));
                                             } else {
-                                                String randomNumber = RandomStringUtils.randomNumeric(5);
-                                                VKUtils.sendMessage(userId, Utils.getString("telegram.messages.telegram-tied-up"));
-                                                Utils.sendMessage(player, Utils.getString("messages.game-tied-up").replace("%code%", randomNumber));
-                                                codes.put(userId, randomNumber);
-                                                playerNames.put(userId, player.getName());
+                                                DataConfig dataConfig = new DataConfig("");
+                                                if (dataConfig.contains(player.getName() + ".telegram")) {
+                                                    VKUtils.sendMessage(userId, Utils.getString("telegram.messages.already-tied-up"));
+                                                } else {
+                                                    String randomNumber = RandomStringUtils.randomNumeric(5);
+                                                    VKUtils.sendMessage(userId, Utils.getString("telegram.messages.telegram-tied-up"));
+                                                    Utils.sendMessage(player, Utils.getString("messages.game-tied-up").replace("%code%", randomNumber));
+                                                    codes.put(userId, randomNumber);
+                                                    playerNames.put(userId, player.getName());
+                                                }
                                             }
                                         }
                                     } else {
