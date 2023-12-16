@@ -35,7 +35,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             long chatId = message.getChatId();
             String msg = message.getText();
             String[] args = msg.split(" ");
-            if (msg.startsWith("/start")) {
+            if (msg.startsWith("/start") || msg.startsWith("Начать")) {
                 return;
             }
             if (args.length == 3) {

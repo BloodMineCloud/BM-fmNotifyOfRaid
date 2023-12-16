@@ -44,7 +44,7 @@ public class VKBot {
                         String msg = message.getText();
                         int userId = message.getFromId();
                         String[] args = msg.split(" ");
-                        if (msg.startsWith("/start")) {
+                        if (msg.startsWith("/start") || msg.startsWith("Начать")) {
                             return;
                         }
                         if (userId <= 0) {
