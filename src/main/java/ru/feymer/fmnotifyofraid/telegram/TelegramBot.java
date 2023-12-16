@@ -61,21 +61,22 @@ public class TelegramBot extends TelegramLongPollingBot {
                                         this.sendMessage(chatId, Utils.getString("telegram.messages.not-playerpoints"));
                                     }
                                 }
-                                } else if (Utils.getString("currency.type").equalsIgnoreCase("VAULT")) {
-                                setupEconomy();
-                                if (econ.has(player.getName(), Utils.getInt("currency.count"))) {
-                                    DataConfig dataConfig = new DataConfig("");
-                                    if (dataConfig.contains(player.getName() + ".telegram")) {
-                                        this.sendMessage(chatId, Utils.getString("telegram.messages.already-tied-up"));
+                                else if (Utils.getString("currency.type").equalsIgnoreCase("VAULT")) {
+                                    setupEconomy();
+                                    if (econ.has(player.getName(), Utils.getInt("currency.count"))) {
+                                        DataConfig dataConfig = new DataConfig("");
+                                        if (dataConfig.contains(player.getName() + ".telegram")) {
+                                            this.sendMessage(chatId, Utils.getString("telegram.messages.already-tied-up"));
+                                        } else {
+                                            String randomNumber = RandomStringUtils.randomNumeric(5);
+                                            this.sendMessage(chatId, Utils.getString("telegram.messages.telegram-tied-up"));
+                                            Utils.sendMessage(player, Utils.getString("messages.game-tied-up").replace("%code%", randomNumber));
+                                            codes.put(chatId, randomNumber);
+                                            playerNames.put(chatId, player.getName());
+                                        }
                                     } else {
-                                        String randomNumber = RandomStringUtils.randomNumeric(5);
-                                        this.sendMessage(chatId, Utils.getString("telegram.messages.telegram-tied-up"));
-                                        Utils.sendMessage(player, Utils.getString("messages.game-tied-up").replace("%code%", randomNumber));
-                                        codes.put(chatId, randomNumber);
-                                        playerNames.put(chatId, player.getName());
+                                        this.sendMessage(chatId, Utils.getString("telegram.messages.not-vault"));
                                     }
-                                } else {
-                                    this.sendMessage(chatId, Utils.getString("telegram.messages.not-vault"));
                                 }
                             } else {
                                 DataConfig dataConfig = new DataConfig("");
