@@ -47,7 +47,9 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
 
                     if (ownerName != null) {
                         if (Utils.getBoolean("settings.message-in-game-of-raid")) {
-                            Utils.sendMessage(ownerName, Utils.getString("messages.notify-of-raid-in-game").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                            for (String message : Utils.getStringList("messages.notify-of-raid-in-game")) {
+                                Utils.sendMessage(ownerName, message.replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
+                            }
                         }
                         if (Utils.getBoolean("settings.message-in-telegram-of-raid")) {
                             TelegramUtils telegramUtils = new TelegramUtils();
