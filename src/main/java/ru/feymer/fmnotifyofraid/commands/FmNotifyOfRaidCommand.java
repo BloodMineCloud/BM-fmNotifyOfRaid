@@ -5,6 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import ru.feymer.fmnotifyofraid.FmNotifyOfRaid;
+import ru.feymer.fmnotifyofraid.utils.Config;
 import ru.feymer.fmnotifyofraid.utils.DataConfig;
 import ru.feymer.fmnotifyofraid.utils.Utils;
 
@@ -14,7 +15,7 @@ public class FmNotifyOfRaidCommand implements CommandExecutor {
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reload")) {
                 if (sender.hasPermission("fmnotifyofraid.reload")) {
-                    FmNotifyOfRaid.getInstance().reloadConfig();
+                    Config.reloadConfig(FmNotifyOfRaid.getInstance());
                     DataConfig.reloadData(FmNotifyOfRaid.getInstance());
                     Utils.sendMessage(sender, Utils.getString("messages.reload"));
                 } else {
