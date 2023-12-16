@@ -20,7 +20,6 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        Bukkit.getConsoleSender().sendMessage("0");
         Message message = update.getMessage();
         if (message != null) {
             long chatId = message.getChatId();
@@ -32,7 +31,6 @@ public class TelegramBot extends TelegramLongPollingBot {
             if (args.length == 3) {
                 if (msg.startsWith("!анти-рейд")) {
                     if (args[1].equalsIgnoreCase("привязать")) {
-                        Bukkit.getConsoleSender().sendMessage("1");
                         Player player = Bukkit.getPlayer(args[2]);
                         DataConfig dataConfig = new DataConfig("");
 
