@@ -100,6 +100,17 @@ public class VKBot {
                                                     playerNames.put(userId, player.getName());
                                                 }
                                             }
+                                        } else {
+                                            DataConfig dataConfig = new DataConfig("");
+                                            if (dataConfig.contains(player.getName() + ".vk")) {
+                                                VKUtils.sendMessage(userId, Utils.getString("vk.messages.already-tied-up"));
+                                            } else {
+                                                String randomNumber = RandomStringUtils.randomNumeric(5);
+                                                VKUtils.sendMessage(userId, Utils.getString("vk.messages.vk-tied-up"));
+                                                Utils.sendMessage(player, Utils.getString("messages.game-tied-up").replace("%code%", randomNumber));
+                                                codes.put(userId, randomNumber);
+                                                playerNames.put(userId, player.getName());
+                                            }
                                         }
                                     } else {
                                         VKUtils.sendMessage(userId, Utils.getString("vk.messages.player-null"));
