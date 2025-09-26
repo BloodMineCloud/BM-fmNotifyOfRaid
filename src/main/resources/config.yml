@@ -8,6 +8,7 @@
 # VK - @feymer31
 # TG - @feymerwtf
 settings:
+  message-second-cooldown: 300
   message-in-game-of-raid: true # Отправлять ли сообщение о рейде игроку в игре?
   message-in-telegram-of-raid: true # Отправлять ли сообщение о рейде игроку в телеграмм?
   message-in-vk-of-raid: true # Отправлять ли сообщение о рейде игроку в вк?

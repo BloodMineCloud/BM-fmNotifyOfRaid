@@ -9,7 +9,7 @@ shadowJar {
 }
 
 group = 'ru.feymer'
-version = '1.9'
+version = '1.9.1-FORKED'
 
 repositories {
     mavenCentral()

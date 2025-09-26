@@ -20,13 +20,21 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.feymer.fmnotifyofraid.manager.CooldownManager;
 import ru.feymer.fmnotifyofraid.telegram.TelegramUtils;
 import ru.feymer.fmnotifyofraid.utils.Utils;
 import ru.feymer.fmnotifyofraid.vk.VKUtils;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 public class Listeners extends TelegramLongPollingBot implements Listener {
+
+    private final CooldownManager<String> cooldownManager = new CooldownManager<>(() -> Duration.ofSeconds(Utils.getInt("settings.message-second-cooldown")));
 
     WorldGuard worldGuard = WorldGuard.getInstance();
 
@@ -44,6 +52,8 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                 DefaultDomain owners = rg.getOwners();
                 for (UUID uuid : owners.getUniqueIds()) {
                     Player ownerName = Bukkit.getPlayer(uuid);
+
+                    if (ownerName == null || !cooldownManager.addNewCooldownIfPassed(ownerName.getName().toLowerCase(Locale.ROOT))) continue;
 
                     if (ownerName != null) {
                         if (Utils.getBoolean("settings.message-in-game-of-raid")) {
@@ -113,6 +123,8 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                 for (UUID uuid : owners.getUniqueIds()) {
                     Player ownerName = Bukkit.getPlayer(uuid);
 
+                    if (ownerName == null || !cooldownManager.addNewCooldownIfPassed(ownerName.getName().toLowerCase(Locale.ROOT))) continue;
+
                     if (ownerName != null) {
                         if (Utils.getBoolean("settings.message-in-game-of-raid")) {
                             Utils.sendMessage(ownerName, Utils.getString("messages.notify-of-raid-in-game").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
@@ -178,6 +190,8 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                 DefaultDomain owners = rg.getOwners();
                 for (UUID uuid : owners.getUniqueIds()) {
                     Player ownerName = Bukkit.getPlayer(uuid);
+
+                    if (ownerName == null || !cooldownManager.addNewCooldownIfPassed(ownerName.getName().toLowerCase(Locale.ROOT))) continue;
 
                     if (ownerName != null) {
                         if (Utils.getBoolean("settings.message-in-game-of-raid")) {
@@ -264,6 +278,9 @@ public class Listeners extends TelegramLongPollingBot implements Listener {
                 DefaultDomain owners = rg.getOwners();
                 for (UUID uuid : owners.getUniqueIds()) {
                     Player ownerName = Bukkit.getPlayer(uuid);
+
+                    if (ownerName == null || !cooldownManager.addNewCooldownIfPassed(ownerName.getName().toLowerCase(Locale.ROOT))) continue;
+
                     if (ownerName != null) {
                         if (Utils.getBoolean("settings.message-in-game-of-raid")) {
                             Utils.sendMessage(ownerName, Utils.getString("messages.notify-of-raid-in-game").replace("%region%", rg.getId()).replace("%x%", Integer.toString(x)).replace("%y%", Integer.toString(y)).replace("%z%", Integer.toString(z)));
